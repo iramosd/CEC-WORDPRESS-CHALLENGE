@@ -1,6 +1,5 @@
 <?php
 ?>
-<?php echo "postype: ".get_post_type() ?>
 <div class="col-3 mt-3 mb-2">
     <div class="card" style="width: 18rem;">
         <div class="card-body">

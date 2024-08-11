@@ -92,7 +92,7 @@ function cec_restrict_content_by_role($content) {
                 $excerpt = implode(' ', $words);
             }
 
-            $content = $excerpt . '<p>For full access, you can <a href="#">upgrade your plan</a>.</p>';
+            $content = $excerpt . '<p class="text-center text-uppercase"> <a href="/#membership">upgrade your plan for full access</a>.</p>';
         }
     }
     return $content;
