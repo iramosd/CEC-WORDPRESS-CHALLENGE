@@ -11041,3 +11041,17 @@ html {
 .copyright {
     background-color: #1a252f;
 }
+
+.navbar-nav {
+    list-style: none;
+    padding-left: 0;
+}
+
+.navbar-nav li {
+    margin: 0 10px;
+}
+
+.navbar-nav li a {
+    text-decoration: none;
+    color: #ffffff;
+}

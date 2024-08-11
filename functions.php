@@ -53,11 +53,11 @@ function cec_exclude_premium_posts_from_list($query) {
             $meta_query = array(
                 'relation' => 'OR',
                 array(
-                    'key' => '_cr_role',
+                    'key' => '_cec_role',
                     'compare' => 'NOT EXISTS'
                 ),
                 array(
-                    'key' => '_cr_role',
+                    'key' => '_cec_role',
                     'value' => 'premium_reader',
                     'compare' => '!='
                 )
@@ -68,7 +68,16 @@ function cec_exclude_premium_posts_from_list($query) {
     }
 }
 
+function cec_register_menus(){
+    register_nav_menus(
+        array(
+            'primary-menu' => 'Primary Menu',
+        )
+    );
+}
+
 add_action('init', 'cec_enable_public_registration');
+add_action('init', 'cec_register_menus');
 add_action('after_setup_theme', 'cec_add_roles');
 add_action('add_meta_boxes', 'cec_add_role_metabox');
 add_action('save_post', 'cec_save_role_metabox');
@@ -78,7 +87,18 @@ function cec_restrict_content_by_role($content) {
     if (is_singular('post')) {
         $required_role = get_post_meta(get_the_ID(), '_cec_role', true);
 
-        if ($required_role && !current_user_can($required_role)) {
+        if ($required_role) {
+            if (current_user_can('premium_reader')) {
+                return $content;
+            }
+
+            if (current_user_can('paid_reader') && ($required_role === 'free_reader' || $required_role === 'paid_reader')) {
+                return $content;
+            }
+
+            if (current_user_can('free_reader') && $required_role === 'free_reader') {
+                return $content;
+            }
 
             $post_content = get_post_field('post_content', get_the_ID());
             $post_content = strip_shortcodes($post_content);
