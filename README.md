@@ -1,4 +1,4 @@
-# WordPress Challenge
+# Wordpress theme: restrict content based on roles 
 
 ## Instructions
 
